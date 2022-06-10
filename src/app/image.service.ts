@@ -25,44 +25,15 @@ export class ImageService {
     return `${this.unsplashAPIBaseURL}/search/photos?client_id=${environment.unsplashAccessKey}&page=${page}&per_page=${perPage}&query=${query}`;
   }
 
-  private requestAllImages(page: number, perPage: number): Observable<any> {
-    let url = this.buildListImagesURL(page, perPage);
-    return this.httpClient.get(url);
+  requestAllImages(page: number, perPage: number): Observable<Image[]> {
+    return this.httpClient.get<Image[]>(this.buildListImagesURL(page, perPage));
   }
 
-  private requestSearchImage(query: string, page: number, perPage: number): Observable<any> {
-    let url = this.buildImageSearchURL(query, page, perPage);
-    return this.httpClient.get(url);
+  requestSearchImage(query: string, page: number, perPage: number): Observable<any> {
+    return this.httpClient.get<Image[]>(this.buildImageSearchURL(query, page, perPage));
   }
 
-  private requestGetImage(imageId: string): Observable<any> {
-    let url = this.buildImageURL(imageId)
-    return this.httpClient.get(url);
-  }
-
-  async listAllImages(page: number, perPage: number) {
-    const response = this.requestAllImages(page, perPage);
-    return 
-  }
-
-  searchImage(query: string, page: number, perPage: number): Observable<any> {
-    return this.requestSearchImage(query, page, perPage);
-  }
-
-  getOneImage(imageId: string): Observable<any> {
-    return this.requestGetImage(imageId);
-  }
-
-  parseListImageRow(responseDataRow: any): Image { 
-    return new Image(
-      responseDataRow.id,
-      responseDataRow.created_at,
-      responseDataRow.description,
-      responseDataRow.likes,
-      responseDataRow.urls.regular,
-      responseDataRow.user.name,
-      0,
-      [],
-    );
+  requestGetImage(imageId: string): Observable<Image[]> {
+    return this.httpClient.get<Image[]>(this.buildImageURL(imageId));
   }
 }

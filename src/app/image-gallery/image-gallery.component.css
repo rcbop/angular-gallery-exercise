@@ -1,0 +1,11 @@
+.card-group {
+  display: flex;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card {
+    transition: transform 200ms ease-out;
+}

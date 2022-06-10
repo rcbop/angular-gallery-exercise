@@ -26,7 +26,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-
 ## steps
 
 - install angular 13 `npm install -g '@angular/cli@13'`
@@ -38,5 +37,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - edit `app.modules.ts`, add references to the previously installed external modules above inside @NgModule imports
 - create component `ng generate component image-gallery` to be our home page gallery.
 - add the new gallery component `image-gallery` to the angular router to be our root page `/`
-- add new model inside `src/app/model/` for holding the image data
+- add new model interface inside `src/app/model/` for holding the image data based on the api response structure
 - create service for getting image metadata `ng generate service image`
+- implement methods to fetch images inside the service
+- create `ng generate component image-details` for detailing an image

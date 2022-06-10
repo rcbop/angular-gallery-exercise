@@ -1,5 +1,14 @@
-<div class="container">
-    <div class="row pb-5 mb-4">
-        <h1>image-gallery works!</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="card col-6 col-sm-6 col-md-4 col-lg-3" *ngFor="let image of images">
+            <a [routerLink]="['/images', image.id]">
+                <img class="card-img-top" [src]="image.urls.raw + '&fit=crop&w=500&h=500'"
+                    alt="{{image.alt_description}}" />
+                <div class="card-body">
+                    <h5 class="card-title">{{image.description}}</h5>
+                    <p class="card-text">{{ image.created_at }}</p>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
