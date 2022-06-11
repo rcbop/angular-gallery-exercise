@@ -16,21 +16,32 @@ export class ImageGalleryComponent implements OnInit {
   images: Image[] = [];
   pageSize = 24;
   currentPage = 1;
+  searchTerm = '';
 
   constructor(private imgService: ImageService, private pageService: PageService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.pageService.changePage(this.currentPage);
-
+    
     this.loadImages();
     this.listenToOnPageChanged();
     this.listenToOnSearchSubmited();
+    console.log('image gallery component initialized');
   }
 
   loadImages() {
-    this.imgService.getImages(this.currentPage, this.pageSize).subscribe(res => {
-      this.normalizeImages(res);
-    });
+    console.log('loading images:', this.currentPage, this.pageSize, this.searchTerm);
+    if (this.searchTerm.length > 0) {
+      this.imgService.requestSearchImage(this.searchTerm, this.currentPage, this.pageSize).subscribe(res => {
+        this.images = [];
+        this.normalizeImages(res.results);
+      });
+    } else {
+      this.imgService.getImages(this.currentPage, this.pageSize).subscribe(res => {
+        this.images = [];
+        this.normalizeImages(res);
+      });
+    }
   }
 
   normalizeImages(res: any) {
@@ -41,28 +52,18 @@ export class ImageGalleryComponent implements OnInit {
 
   listenToOnPageChanged() {
     this.pageService.currentPage.subscribe(page => {
+      console.log('page changed', page);
       this.currentPage = page;
-      this.imgService.getImages(this.currentPage, this.pageSize).subscribe(res => {
-        this.images = [];
-        this.normalizeImages(res);
-      });
+      this.images = [];
+      this.loadImages();
     });
   }
 
   listenToOnSearchSubmited() {
     this.searchService.currentSearchTerm$.subscribe(searchTerm => {
-      console.log(searchTerm);
-      if (searchTerm.length == 0) {
-        this.loadImages();
-        return;
-      }
-
-      this.currentPage = 1;
-      this.imgService.requestSearchImage(searchTerm, this.currentPage, this.pageSize).subscribe(res => {
-        this.images = [];
-        this.normalizeImages(res.results);
-        this.pageService.changePage(this.currentPage);
-      });
+      console.log('search term changed', searchTerm);
+      this.searchTerm = searchTerm;
+      this.loadImages();
     });
   }
 

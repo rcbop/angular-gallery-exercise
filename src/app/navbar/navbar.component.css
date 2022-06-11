@@ -13,3 +13,11 @@ button {
     margin-right: 15px;
     margin-left: 5px;
 }
+
+fa-icon:hover {
+    color: #070707;
+}
+
+.remove-search {
+    margin-right: 10px;
+}
