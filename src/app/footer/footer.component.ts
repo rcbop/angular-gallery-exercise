@@ -12,6 +12,8 @@ export class FooterComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
   currentPage: number;
+  totalPages: number;
+  defaultPageNumber: number;
 
   constructor(private pageService: PageService, private router: Router) {
     this.currentPage = 1;
@@ -20,7 +22,13 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
     this.pageService.currentPage.subscribe(page => {
       this.currentPage = page;
+      console.log('current page:', this.currentPage);
     });
+    this.pageService.currentTotalPages.subscribe(totalPages => {
+     this.totalPages = totalPages;
+      console.log('total pages:', this.totalPages);
+    });
+    this.defaultPageNumber = this.pageService.defaultPageCount;
   }
 
   nextPage() {
@@ -33,7 +41,7 @@ export class FooterComponent implements OnInit {
     }
   }
 
-  isDetailsPage(): boolean {
-    return this.router.url.includes('/images/');
+  isShowFooter(): boolean {
+    return !this.router.url.includes('/images/') || !this.router.url.includes('/error');
   }
 }

@@ -23,7 +23,6 @@ export class ImageDetailsComponent implements OnInit {
     this.strTags = '';
   }
 
-
   ngOnInit(): void {
     let imgID = this.getImageIDFromRoutePath();
     this.imgService.requestGetImage(imgID).subscribe(res => {
@@ -38,6 +37,9 @@ export class ImageDetailsComponent implements OnInit {
       }
 
       this.isFavorite = this.imgService.isFavorite(this.image)
+    }, err => {
+      console.log('error:', err);
+      this.router.navigate(['/error']);
     });
   }
 

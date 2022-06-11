@@ -72,6 +72,11 @@ export class ImageService {
     this.saveFavorites();
   }
 
+  getAllFavoritesCount(): number {
+    this.loadFavorites();
+    return Array.from(this.favorites.values()).length;
+  }
+
   getFavorites(pageNumber: number, pageSize: number): Image[] {
     this.loadFavorites();
     let allFavorites = Array.from(this.favorites.values());

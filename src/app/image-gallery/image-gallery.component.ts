@@ -32,19 +32,27 @@ export class ImageGalleryComponent implements OnInit {
 
   loadImages() {
     console.log('loading images:', this.currentPage, this.pageSize, this.searchTerm);
+
+    // load search term images
     if (this.searchTerm.length > 0) {
       this.imgService.requestSearchImage(this.searchTerm, this.currentPage, this.pageSize).subscribe(res => {
         if (res.results.length == 0) {
           console.log('no images found');
           this.router.navigate(['/error']);
         }
-        
+
         this.images = [];
+        let totalPages = res.total_pages || 1;
+        let totalSearchResults = res.total || 0;
+        this.searchService.changeSearchResultsCount(totalSearchResults);
+        this.pageService.changeTotalPages(totalPages);
         this.normalizeImages(res.results);
       });
+    // load random images
     } else {
       this.imgService.getImages(this.currentPage, this.pageSize).subscribe(res => {
         this.images = [];
+        this.pageService.resetTotalPages();
         this.normalizeImages(res);
       });
     }

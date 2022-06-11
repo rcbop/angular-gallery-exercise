@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <ul class="nav navbar-nav mx-auto" *ngIf="!isDetailsPage()">
+    <ul class="nav navbar-nav mx-auto" *ngIf="isShowFooter()">
         <li class="nav-item">
             <a class="nav-link" (click)="previousPage()" *ngIf="currentPage > 1">
                 <fa-icon [icon]="faArrowLeft"></fa-icon>
@@ -11,8 +11,14 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" (click)="nextPage()">
+            <a class="nav-link" (click)="nextPage()" *ngIf="currentPage + 1 <= totalPages">
                 <fa-icon [icon]="faArrowRight"></fa-icon>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#" *ngIf="totalPages != defaultPageNumber">
+                <p>(Total Pages: {{ totalPages }})</p>
             </a>
         </li>
     </ul>

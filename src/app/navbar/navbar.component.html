@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
-    <fa-icon [icon]="faHatWizard" size="1x"></fa-icon>Image Wizard
+        <fa-icon [icon]="faHatWizard" size="1x"></fa-icon>Image Wizard
     </a>
     <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -11,10 +11,31 @@
                 <a class="nav-link" href="/favorites">Favorites</a>
             </li>
         </ul>
-        <div class="d-flex ms-auto" (keyup.enter)="onSearch(search.value)">
+        <ul class="nav navbar-nav flex-fill justify-content-center" *ngIf="searchTerm.length > 0">
+            <li class="nav-item"><a class="nav-link" href="#">Total Results: {{ searchResultsCount }}</a></li>
+        </ul>
+        <div class="d-flex ms-auto" *ngIf="!isFavoritesPage()" (keyup.enter)="search.value == '' || search.value == undefined ? showModal(mymodal) : onSearch(search.value)">
             <fa-icon [icon]="faXmark" class="remove-search fa-2x" *ngIf="search.value.length > 0" (click)="cleanSearch()"></fa-icon>
             <input #search class="form-control" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-secondary" (click)="onSearch(search.value)" >Search</button>
+            <button class="btn btn-secondary" (click)="search.value == '' || search.value == undefined ? showModal(mymodal) : onSearch(search.value)">Search</button>
         </div>
     </div>
 </nav>
+
+<!--modal for search error-->
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title">Search Error</h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Invalid Search Term</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">
+            Close
+        </button>
+    </div>
+</ng-template>
