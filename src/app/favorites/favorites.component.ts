@@ -17,7 +17,6 @@ export class FavoritesComponent implements OnInit {
 
   ngOnInit(): void {
     this.favorites = this.imgService.getFavorites(this.firstPage, this.pageSize);
-    console.log(this.favorites);
     this.pageService.changePage(this.firstPage);
     this.pageService.currentPage.subscribe(page => {
       this.favorites = this.imgService.getFavorites(page, this.pageSize);

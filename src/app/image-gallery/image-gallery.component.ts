@@ -34,7 +34,6 @@ export class ImageGalleryComponent implements OnInit {
   }
 
   normalizeImages(res: any) {
-    console.log(res);
     for (let img of res) {
       this.images.push(Utils.fixMissingFields(img));
     }

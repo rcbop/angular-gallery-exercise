@@ -16,11 +16,8 @@ export class NavbarComponent implements OnInit {
   }
 
   onSearch(term: string) {
-  
-    console.log("searching", term);
     if (term.length > 0) {
       this.searchService.changeSearchTerm(term);
     }
   }
-
 }

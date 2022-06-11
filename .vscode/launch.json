@@ -3,12 +3,19 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "firefox",
+      "request": "launch",
+      "reAttach": true,
+      "name": "Launch localhost",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
       "name": "ng serve",
       "type": "pwa-chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
       "url": "http://localhost:4200/",
-      "browserLaunchLocation": "/usr/bin/firefox"
     },
     {
       "name": "ng test",

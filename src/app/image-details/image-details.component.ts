@@ -15,10 +15,12 @@ export class ImageDetailsComponent implements OnInit {
   faPlus: any = faPlus;
   faMinus: any = faMinus;
   isFavorite: boolean = false;
+  strTags: string;
 
   constructor(private router: Router, private imgService: ImageService) { 
     this.image = null;
     this.year = '';
+    this.strTags = '';
   }
 
 
@@ -27,6 +29,13 @@ export class ImageDetailsComponent implements OnInit {
     this.imgService.requestGetImage(imgID).subscribe(res => {
       this.image = Utils.fixMissingFields(res);
       this.year = Utils.getYearFromDate(this.image.created_at);
+      console.log('tags:', this.image.tags.length);
+      for (let i in res.tags) {
+        this.strTags = this.strTags + '#' + res.tags[i].title + ' ';
+      }
+      if (res.tags.length == 0) {
+        this.strTags = 'No tags';
+      }
 
       this.isFavorite = this.imgService.isFavorite(this.image)
     });

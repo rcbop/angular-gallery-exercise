@@ -7,7 +7,7 @@ export interface Image {
     urls: URLS,
     user: User,
     downloads: number,
-    tags: string[]
+    tags: Tag[]
 }
 
 export interface URLS {
@@ -17,4 +17,8 @@ export interface URLS {
 
 export interface User {
     name: string,
+}
+
+export interface Tag {
+    title: string,
 }
