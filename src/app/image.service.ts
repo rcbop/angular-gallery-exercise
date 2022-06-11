@@ -11,6 +11,8 @@ export class ImageService {
 
   unsplashAPIBaseURL: string = 'https://api.unsplash.com';
 
+  favorites: Map<string, Image> = new Map<string, Image>();
+
   constructor(private httpClient: HttpClient) {}
 
   private buildListImagesURL(page: number, perPage: number) {
@@ -25,15 +27,57 @@ export class ImageService {
     return `${this.unsplashAPIBaseURL}/search/photos?client_id=${environment.unsplashAccessKey}&page=${page}&per_page=${perPage}&query=${query}`;
   }
 
-  requestAllImages(page: number, perPage: number): Observable<Image[]> {
+  getImages(page: number, perPage: number, query?: string): Observable<Image[]> {
+    if (query) {
+      return this.requestSearchImage(query, page, perPage);
+    }
+    return this.requestAllImages(page, perPage);
+  }
+
+  private requestAllImages(page: number, perPage: number): Observable<Image[]> {
     return this.httpClient.get<Image[]>(this.buildListImagesURL(page, perPage));
   }
 
-  requestSearchImage(query: string, page: number, perPage: number): Observable<any> {
+  private requestSearchImage(query: string, page: number, perPage: number): Observable<any> {
     return this.httpClient.get<Image[]>(this.buildImageSearchURL(query, page, perPage));
   }
 
-  requestGetImage(imageId: string): Observable<Image[]> {
-    return this.httpClient.get<Image[]>(this.buildImageURL(imageId));
+  requestGetImage(imageId: string): Observable<Image> {
+    return this.httpClient.get<Image>(this.buildImageURL(imageId));
+  }
+
+  private saveFavorites() {
+    localStorage.setItem('favorites', JSON.stringify(Array.from(this.favorites.values())));
+  }
+
+  private loadFavorites() {
+    const favorites = localStorage.getItem('favorites');
+    if (favorites) {
+      const images = JSON.parse(favorites);
+      for (let image of images) {
+        this.favorites.set(image.id, image);
+      }
+    }
+  }
+
+  addFavorite(image: Image) {
+    this.loadFavorites();
+    this.favorites.set(image.id, image);
+    this.saveFavorites();
+  }
+
+  removeFavorite(image: Image) {
+    this.loadFavorites();
+    this.favorites.delete(image.id);
+    this.saveFavorites();
+  }
+
+  getAllFavorites(): Image[] {
+    this.loadFavorites();
+    return Array.from(this.favorites.values());
+  }
+
+  isFavorite(image: Image): boolean {
+    return this.favorites.has(image.id);
   }
 }

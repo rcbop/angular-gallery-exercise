@@ -3,9 +3,25 @@
 }
 
 .card:hover {
-    transform: scale(1.03);
+  transform: scale(1.03);
 }
 
 .card {
-    transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
 }

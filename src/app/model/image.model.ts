@@ -1,17 +1,18 @@
 export interface Image {
-    id: number,
+    id: string,
     created_at: string,
     description: string,
     alt_description: string,
-    total_likes: number,
+    likes: number,
     urls: URLS,
     user: User,
-    totalDownloads: number,
+    downloads: number,
     tags: string[]
 }
 
 export interface URLS {
     raw: string,
+    regular: string,
 }
 
 export interface User {

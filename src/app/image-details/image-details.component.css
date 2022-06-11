@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    width: 100%;
+}
+
+h4 {
+    color: gray;
+}
+
+button {
+    margin-left: 5px;
+    margin-right: 5px;
+}

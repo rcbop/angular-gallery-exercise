@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Image } from '../model/image.model'; 
 import { ImageService } from '../image.service';
+import Utils from '../utils';
 
 @Component({
   selector: 'app-image-gallery',
@@ -8,19 +9,21 @@ import { ImageService } from '../image.service';
   styleUrls: ['./image-gallery.component.css']
 })
 
+
 export class ImageGalleryComponent implements OnInit {
   images: Image[] = [];
+  pageSize = 24;
+  firstPage = 1;
 
   constructor(private imgService: ImageService) {}
 
   ngOnInit(): void {
-    console.log("ngOnInit() image gallery");
-    this.imgService.requestAllImages(1, 24).subscribe(res => {
-      console.log("requestAllImages() image gallery");
-      console.log(res);
+    this.imgService.getImages(this.firstPage, this.pageSize).subscribe(res => {
       for (let img of res) {
-        this.images.push(img);
+        this.images.push(Utils.fixMissingFields(img));
       }
     });
   }
+
+
 }
