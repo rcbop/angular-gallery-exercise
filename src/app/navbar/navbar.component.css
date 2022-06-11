@@ -21,3 +21,7 @@ fa-icon:hover {
 .remove-search {
     margin-right: 10px;
 }
+
+.navbar-brand:hover {
+    color: #070707;
+}

@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
 import { SearchService } from '../search.service';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,7 @@ export class NavbarComponent implements OnInit {
   faXmark = faXmark;
   @ViewChild("search") searchInput: ElementRef;
 
-  constructor(private searchService: SearchService) { }
+  constructor(private searchService: SearchService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -28,5 +29,6 @@ export class NavbarComponent implements OnInit {
   cleanSearch() {
     this.searchService.changeSearchTerm('');
     this.searchInput.nativeElement.value = '';
+    this.router.navigate(['/']);
   }
 }

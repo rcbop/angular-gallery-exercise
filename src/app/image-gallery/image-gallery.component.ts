@@ -4,6 +4,7 @@ import { ImageService } from '../image.service';
 import Utils from '../utils';
 import { PageService } from '../page.service';
 import { SearchService } from '../search.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-image-gallery',
@@ -18,7 +19,7 @@ export class ImageGalleryComponent implements OnInit {
   currentPage = 1;
   searchTerm = '';
 
-  constructor(private imgService: ImageService, private pageService: PageService, private searchService: SearchService) { }
+  constructor(private router: Router, private imgService: ImageService, private pageService: PageService, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.pageService.changePage(this.currentPage);
@@ -33,6 +34,11 @@ export class ImageGalleryComponent implements OnInit {
     console.log('loading images:', this.currentPage, this.pageSize, this.searchTerm);
     if (this.searchTerm.length > 0) {
       this.imgService.requestSearchImage(this.searchTerm, this.currentPage, this.pageSize).subscribe(res => {
+        if (res.results.length == 0) {
+          console.log('no images found');
+          this.router.navigate(['/error']);
+        }
+        
         this.images = [];
         this.normalizeImages(res.results);
       });
