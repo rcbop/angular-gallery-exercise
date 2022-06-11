@@ -11,6 +11,7 @@ import { ImageDetailsComponent } from './image-details/image-details.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorComponent } from './error/error.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
     NavbarComponent,
     ErrorComponent,
     FavoritesComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

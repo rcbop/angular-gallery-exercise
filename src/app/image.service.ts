@@ -16,7 +16,7 @@ export class ImageService {
   constructor(private httpClient: HttpClient) {}
 
   private buildListImagesURL(page: number, perPage: number) {
-    return `${this.unsplashAPIBaseURL}/photos?client_id=${environment.unsplashAccessKey}&page=${page}&per_page=${perPage}`;
+    return `${this.unsplashAPIBaseURL}/photos?client_id=${environment.unsplashAccessKey}&page=${page}&per_page=${perPage}&order_by=latest`;
   }
 
   private buildImageURL(imageId: string) {
@@ -38,7 +38,7 @@ export class ImageService {
     return this.httpClient.get<Image[]>(this.buildListImagesURL(page, perPage));
   }
 
-  private requestSearchImage(query: string, page: number, perPage: number): Observable<any> {
+  requestSearchImage(query: string, page: number, perPage: number): Observable<any> {
     return this.httpClient.get<Image[]>(this.buildImageSearchURL(query, page, perPage));
   }
 
@@ -72,9 +72,12 @@ export class ImageService {
     this.saveFavorites();
   }
 
-  getAllFavorites(): Image[] {
+  getFavorites(pageNumber: number, pageSize: number): Image[] {
     this.loadFavorites();
-    return Array.from(this.favorites.values());
+    let allFavorites = Array.from(this.favorites.values());
+    let start = (pageNumber - 1) * pageSize;
+    let end = start + pageSize;
+    return allFavorites.slice(start, end);
   }
 
   isFavorite(image: Image): boolean {

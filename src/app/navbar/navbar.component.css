@@ -1,8 +1,15 @@
 fa-icon {
     color: white;
+    margin-left: 15px;
+    margin-right: 5px;
 }
 
 nav {
     background-color: #d6cbd3;
     color: white;
+}
+
+button {
+    margin-right: 15px;
+    margin-left: 5px;
 }

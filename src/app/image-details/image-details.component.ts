@@ -14,7 +14,6 @@ export class ImageDetailsComponent implements OnInit {
   year: string;
   faPlus: any = faPlus;
   faMinus: any = faMinus;
-  favoriteIcon: any = faPlus;
   isFavorite: boolean = false;
 
   constructor(private router: Router, private imgService: ImageService) { 
@@ -30,12 +29,7 @@ export class ImageDetailsComponent implements OnInit {
       this.year = Utils.getYearFromDate(this.image.created_at);
 
       this.isFavorite = this.imgService.isFavorite(this.image)
-      this.changeFavoriteIcon();
     });
-  }
-
-  changeFavoriteIcon() {
-    this.isFavorite ? this.favoriteIcon = this.faMinus : this.favoriteIcon = this.faPlus;
   }
 
   getImageIDFromRoutePath(): string {
@@ -43,12 +37,12 @@ export class ImageDetailsComponent implements OnInit {
   }
 
   addFavorite(image: any) {
+    this.isFavorite = true;
     this.imgService.addFavorite(image);
-    this.favoriteIcon = this.faMinus;
   }
 
   removeFavorite(image: any) {
+    this.isFavorite = false;
     this.imgService.removeFavorite(image);
-    this.favoriteIcon = this.faPlus;
   }
 }

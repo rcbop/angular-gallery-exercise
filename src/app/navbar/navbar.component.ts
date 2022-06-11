@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,11 +9,18 @@ import { faHatWizard } from '@fortawesome/free-solid-svg-icons';
 })
 export class NavbarComponent implements OnInit {
   faHatWizard = faHatWizard;
-  @Output() search = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(private searchService: SearchService) { }
 
   ngOnInit(): void {
+  }
+
+  onSearch(term: string) {
+  
+    console.log("searching", term);
+    if (term.length > 0) {
+      this.searchService.changeSearchTerm(term);
+    }
   }
 
 }

@@ -15,10 +15,9 @@
                         Downloads <span class="badge badge-light">{{ image.downloads }}</span>
                     </button>
                     <button class="btn btn-secondary"
-                        routerLinkActive="active"
-                        [routerLink]="['/']"
                         (click)="!isFavorite ? addFavorite(image) : removeFavorite(image)">
-                        <fa-icon [icon]="favoriteIcon"></fa-icon>
+                        <fa-icon [icon]="faPlus" *ngIf="!isFavorite"></fa-icon>
+                        <fa-icon [icon]="faMinus" *ngIf="isFavorite"></fa-icon>
                         Favorite
                     </button>
                 </div>

@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <ul class="nav navbar-nav mx-auto" *ngIf="!isDetailsPage()">
+        <li class="nav-item">
+            <a class="nav-link" (click)="previousPage()" *ngIf="currentPage > 1">
+                <fa-icon [icon]="faArrowLeft"></fa-icon>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <p>{{ currentPage }}</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="nextPage()">
+                <fa-icon [icon]="faArrowRight"></fa-icon>
+            </a>
+        </li>
+    </ul>
+</nav>

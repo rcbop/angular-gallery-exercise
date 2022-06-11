@@ -10,9 +10,9 @@
                 <a class="nav-link" href="/favorites">Favorites</a>
             </li>
         </ul>
-        <form class="d-flex ms-auto">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-primary" type="submit">Search</button>
-        </form>
+        <div class="d-flex ms-auto" (submit)="onSearch(search.value)">
+            <input #search class="form-control" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-secondary" type="submit" (click)="onSearch(search.value)" >Search</button>
+        </div>
     </div>
 </nav>
